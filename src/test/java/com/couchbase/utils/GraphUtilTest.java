@@ -24,7 +24,7 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void test_getMaxPathLengthFromNode_graphWithCycle_throwsException() {
+    public void test_getMaxPathLengthFromNode_graphWithLoop_throwsException() {
         Node nodeA = new Node("A");
         Node nodeB = new Node("B");
 
@@ -32,7 +32,7 @@ public class GraphUtilTest {
         nodeB.addChild(nodeA);
 
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Graph has a cycle");
+        thrown.expectMessage("Graph has a loop");
 
         GraphUtil.getMaxPathLengthFromNode(nodeA);
     }

@@ -29,7 +29,7 @@ public class GraphUtil {
      * Compute the maximum path length from the root node to the most
      * distant remote node
      * <p>
-     * Throws {@link IllegalArgumentException} if graph has cycle
+     * Throws {@link IllegalArgumentException} if graph has loop
      * <p>
      * Uses dijkstra's algorithm with relaxation by MAX value
      *
@@ -39,7 +39,7 @@ public class GraphUtil {
      */
     public static int getMaxPathLengthFromNode(Node node) {
         checkNotNull(node, "Root node must not be null");
-        int cycleDetector = 0;
+        int loopDetector = 0;
 
         Map<Node, PathToNode> nodeToPath = new HashMap<>();
         PathToNode maxPath = new PathToNode(node);
@@ -51,8 +51,8 @@ public class GraphUtil {
         PathToNode currentPath = maxPath;
         while (currentPath != null) {
 
-            if (cycleDetector++ > maxOperationsAllowed) {
-                throw new IllegalArgumentException("Graph has a cycle");
+            if (loopDetector++ > maxOperationsAllowed) {
+                throw new IllegalArgumentException("Graph has a loop");
             }
 
             for (Node child : currentPath.destination.getChildren()) {
