@@ -1,4 +1,6 @@
-package com.couchbase;
+package com.couchbase.utils;
+
+import com.couchbase.model.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,18 +38,17 @@ public class GraphUtil {
      * @see <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm">Dijkstra's algorithm</a>
      */
     public static int getMaxPathLengthFromNode(Node node) {
-
         checkNotNull(node, "Root node must not be null");
         int cycleDetector = 0;
 
-        Map<Node, NodePath> nodeToPath = new HashMap<>();
-        NodePath maxPath = new NodePath(node);
+        Map<Node, PathToNode> nodeToPath = new HashMap<>();
+        PathToNode maxPath = new PathToNode(node);
         nodeToPath.put(node, maxPath);
 
-        Queue<NodePath> pathsToProcess = new LinkedList<>();
+        Queue<PathToNode> pathsToProcess = new LinkedList<>();
 
         double maxOperationsAllowed = 1;
-        NodePath currentPath = maxPath;
+        PathToNode currentPath = maxPath;
         while (currentPath != null) {
 
             if (cycleDetector++ > maxOperationsAllowed) {
@@ -55,10 +56,14 @@ public class GraphUtil {
             }
 
             for (Node child : currentPath.destination.getChildren()) {
-                NodePath childNodePath = nodeToPath.get(child);
+                PathToNode childNodePath = nodeToPath.get(child);
+
+                //If path does not exists or better (longer) path available
                 if (childNodePath == null || childNodePath.length() < currentPath.length() + 1) {
                     childNodePath = currentPath.createPathToNode(child);
                     nodeToPath.put(child, childNodePath);
+
+                    //Max edges in a non-cyclic graph can't exceed nodes^2
                     maxOperationsAllowed = Math.pow(nodeToPath.size(), 2);
                 }
                 pathsToProcess.add(childNodePath);
@@ -74,13 +79,14 @@ public class GraphUtil {
     //TODO consider to replace with Freebuilder
     /**
      * Wrapper to help keep track on nodes visiting path and calculate length
+     * Helps to avoid polluting of graph nodes, {@link Node}
      */
-    private static class NodePath {
+    private static class PathToNode {
 
         private final Node destination;
         private final List<Node> path;
 
-        private NodePath(Node destination) {
+        private PathToNode(Node destination) {
             this.destination = destination;
             path = new ArrayList<>();
         }
@@ -89,8 +95,8 @@ public class GraphUtil {
             path.add(node);
         }
 
-        private NodePath createPathToNode(Node child) {
-            NodePath childPath = new NodePath(child);
+        private PathToNode createPathToNode(Node child) {
+            PathToNode childPath = new PathToNode(child);
             childPath.path.addAll(path);
             childPath.addToPath(destination);
 

@@ -1,4 +1,4 @@
-package com.couchbase;
+package com.couchbase.model;
 
 import com.google.common.collect.ImmutableList;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Implementation of single graph node
+ * Implementation of a graph node
  *
  * @author Aleks
  */
@@ -37,7 +37,7 @@ public class Node {
         return id;
     }
 
-    //TODO(aleks) consider to replace with code generation
+    //TODO(aleks) consider to replace with code generation tools/libs
     //equals
     //hashCode
     @Override

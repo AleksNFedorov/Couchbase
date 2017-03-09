@@ -1,23 +1,22 @@
-package com.couchbase;
+package com.couchbase.utils;
 
 
+import com.couchbase.model.Node;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Unit test for {@link GraphUtil}.
+ * Unit test for {@link GraphUtil}
  */
 public class GraphUtilTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-
     @Test
     public void test_getMaxPathLengthFromNode_nullNode_throwsException() {
-
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("Root node must not be null");
 
@@ -26,7 +25,6 @@ public class GraphUtilTest {
 
     @Test
     public void test_getMaxPathLengthFromNode_graphWithCycle_throwsException() {
-
         Node nodeA = new Node("A");
         Node nodeB = new Node("B");
 
@@ -46,7 +44,6 @@ public class GraphUtilTest {
 
     @Test
     public void test_getMaxPathLengthFromNode_singleMaxPath_returnsValidLength() {
-
         Node nodeA = new Node("A");
         Node nodeB = new Node("B");
         Node nodeC = new Node("C");
@@ -72,5 +69,4 @@ public class GraphUtilTest {
 
         Assert.assertEquals(2, GraphUtil.getMaxPathLengthFromNode(nodeA));
     }
-
 }

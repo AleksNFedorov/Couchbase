@@ -1,6 +1,8 @@
 package com.couchbase;
 
-import static com.couchbase.GraphUtil.getMaxPathLengthFromNode;
+import com.couchbase.model.Node;
+
+import static com.couchbase.utils.GraphUtil.getMaxPathLengthFromNode;
 
 /**
  * Hello world app!
