@@ -24,6 +24,20 @@ public class GraphUtilTest {
     }
 
     @Test
+    public void test_getMaxPathLengthFromNode_1K_nodesGraph_returnsZeroLength() {
+        int count = 1000;
+
+        Node[] nodes = new Node[count];
+        for (int i = 0; i < count; ++i) {
+            nodes[i] = new Node("node:" + i);
+            for (int j = 0; j < i; ++j) {
+                nodes[i].addChild(nodes[j]);
+            }
+        }
+        Assert.assertEquals(999, GraphUtil.getMaxPathLengthFromNode(nodes[count - 1]));
+    }
+
+    @Test
     public void test_getMaxPathLengthFromNode_singleNodeGraph_returnsZeroLength() {
         Assert.assertEquals(0, GraphUtil.getMaxPathLengthFromNode(new Node("A")));
     }

@@ -30,7 +30,7 @@ public class App {
 
         System.out.println(getMaxPathLengthFromNode(nodeA));
 
-        int count = 1000;
+        int count = 10000;
 
         Node[] nodes = new Node[count];
         for (int i = 0; i < count; ++i) {
