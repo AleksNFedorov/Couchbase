@@ -1,6 +1,7 @@
 package com.couchbase;
 
 import com.couchbase.model.Node;
+import com.couchbase.utils.GraphUtil;
 
 import static com.couchbase.utils.GraphUtil.getMaxPathLengthFromNode;
 
@@ -28,6 +29,19 @@ public class App {
         nodeD.addChild(nodeE);
 
         System.out.println(getMaxPathLengthFromNode(nodeA));
+
+        int count = 1000;
+
+        Node[] nodes = new Node[count];
+        for (int i = 0; i < count; ++i) {
+            nodes[i] = new Node("node:" + i);
+            for (int j = 0; j < i; ++j) {
+                nodes[i].addChild(nodes[j]);
+            }
+        }
+        System.out.println(GraphUtil.getMaxPathLengthFromNode(nodes[count - 1]));
+
+
     }
 
 }

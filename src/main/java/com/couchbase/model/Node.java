@@ -48,11 +48,15 @@ public class Node {
         Node node = (Node) o;
 
         return id != null ? id.equals(node.id) : node.id == null;
-
     }
 
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return id;
     }
 }

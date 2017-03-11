@@ -24,22 +24,30 @@ public class GraphUtilTest {
     }
 
     @Test
-    public void test_getMaxPathLengthFromNode_graphWithLoop_throwsException() {
-        Node nodeA = new Node("A");
-        Node nodeB = new Node("B");
-
-        nodeA.addChild(nodeB);
-        nodeB.addChild(nodeA);
-
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Graph has a loop");
-
-        GraphUtil.getMaxPathLengthFromNode(nodeA);
+    public void test_getMaxPathLengthFromNode_singleNodeGraph_returnsZeroLength() {
+        Assert.assertEquals(0, GraphUtil.getMaxPathLengthFromNode(new Node("A")));
     }
 
     @Test
-    public void test_getMaxPathLengthFromNode_singleNodeGraph_returnsZeroLength() {
-        Assert.assertEquals(0, GraphUtil.getMaxPathLengthFromNode(new Node("A")));
+    public void test_getMaxPathLengthFromNode_singleMaxPath_nodeFromMiddle_returnsValidLength() {
+        Node nodeA = new Node("A");
+        Node nodeB = new Node("B");
+        Node nodeC = new Node("C");
+        Node nodeD = new Node("D");
+        Node nodeE = new Node("E");
+
+        nodeA.addChild(nodeB);
+        nodeA.addChild(nodeC);
+        nodeA.addChild(nodeD);
+
+        nodeB.addChild(nodeD);
+
+        nodeC.addChild(nodeD);
+        nodeC.addChild(nodeE);
+
+        nodeD.addChild(nodeE);
+
+        Assert.assertEquals(2, GraphUtil.getMaxPathLengthFromNode(nodeB));
     }
 
     @Test
