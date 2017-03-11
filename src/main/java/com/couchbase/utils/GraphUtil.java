@@ -25,11 +25,11 @@ public class GraphUtil {
      * Compute the maximum path length from the root node to the most
      * distant remote node
      *
-     * Uses depth-first search algorithm
+     * Uses DFS algorithm
      *
      * @param root root node to compute max path from
      * @return the maximum path length
-     * @see <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm">Dijkstra's algorithm</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Depth-first_search">Depth-first searc</a>
      */
     public static int getMaxPathLengthFromNode(Node root) {
         checkNotNull(root, "Root node must not be null");
